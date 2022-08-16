@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, Post } from '@nestjs/common';
 import { NotionService } from 'src/notion/notion.service';
 import { Task } from 'src/notion/task.model';
 import { CHANNELS } from './slack.consts';
@@ -11,11 +11,11 @@ export class SlackController {
     private readonly notionService: NotionService,
   ) {}
 
-  @Get('users')
-  user() {
-    this.notionService.getAllUser();
-    return;
-  }
+  // @Get('users')
+  // user() {
+  //   this.notionService.getAllUser();
+  //   return;
+  // }
 
   @Post('event')
   @HttpCode(200)
@@ -45,6 +45,7 @@ export class SlackController {
   @HttpCode(200)
   async task(@Body('payload') payload: any) {
     const res = JSON.parse(payload);
+    if (this.slackService.isInputAction(res.actions[0].action_id)) return;
     const channel = res.channel?.id;
     const thread_ts = res.message.ts;
     try {

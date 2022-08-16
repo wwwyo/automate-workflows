@@ -45,6 +45,10 @@ export class SlackService {
     });
   }
 
+  isInputAction(actionId) {
+    return actionId !== 'actionId-0';
+  }
+
   get interactiveTaskUi() {
     return [
       {

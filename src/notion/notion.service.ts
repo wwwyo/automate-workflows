@@ -47,7 +47,7 @@ export class NotionService {
         requestData.properties['End'] = { date: { start: task.end } };
       }
       if (task.description) {
-        requestData.properties['children'] = [
+        requestData.children = [
           {
             heading_3: {
               rich_text: [

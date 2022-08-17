@@ -50,23 +50,19 @@ export class SlackController {
     const thread_ts = res.message.ts;
     try {
       this.slackService.verify(res.token);
-      const values = Object.values(res.state.values);
-      const valArray = values.map((valWrapper) => {
-        return Object.values(valWrapper)[0];
+      const task = new Task({
+        ...Task.parse(Object.values(res.state.values)),
+        relationId: CHANNELS[channel],
       });
-      const task = new Task(
-        valArray[0]['value'],
-        valArray[1]['selected_users'],
-        valArray[2]['selected_date'],
-        valArray[3]['selected_date'],
-        valArray[4]['value'],
-        CHANNELS[channel],
-      );
       if (!task.title) throw new Error('タイトルを入力してください');
       const url = await this.notionService.createTask(task);
       this.slackService.postMessage(
         channel,
-        this.slackService.getCreatedTaskMessage(url, task.responsibilities),
+        this.slackService.getCreatedTaskMessage(
+          url,
+          task.toString,
+          task.responsibilities,
+        ),
         thread_ts,
       );
       return 'success';

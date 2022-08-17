@@ -27,9 +27,11 @@ export class SlackService {
     return this.postMessage(channel, this.interactiveTaskUi, thread_ts);
   }
 
-  getCreatedTaskMessage(url: string, userIds?: string[]) {
+  getCreatedTaskMessage(url: string, taskDetails: string, userIds?: string[]) {
     const mentions = userIds?.map((id) => `<@${id}>`);
-    return `taskを作成したよ！${mentions?.join('') || ''}\n${url}`;
+    return `taskを作成したよ！${
+      mentions?.join('') || ''
+    }\n${url}\n${taskDetails}`;
   }
 
   postMessage(

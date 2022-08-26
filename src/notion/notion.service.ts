@@ -3,6 +3,7 @@ import { Client } from '@notionhq/client';
 import { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
 import { Task } from './task.model';
 import { CreatePageParameters } from '@notionhq/client/build/src/api-endpoints';
+import { USER } from 'src/slack/slack.consts';
 
 // Doc: https://developers.notion.com/reference/property-value-object
 @Injectable()
@@ -34,9 +35,6 @@ export class NotionService {
               },
             ],
           },
-          担当者: {
-            people: [], // 無料アカウントでは無理
-          },
         },
       } as CreatePageParameters;
 
@@ -62,6 +60,18 @@ export class NotionService {
             },
           },
         ];
+      }
+
+      const userIds = task.responsibilities.flatMap((slackUser) =>
+        USER[slackUser] ? USER[slackUser] : [],
+      );
+      if (userIds.length > 0) {
+        requestData.properties['担当者'] = {
+          people: userIds.map((id) => ({
+            object: 'user',
+            id,
+          })),
+        };
       }
 
       if (task.relationId) {

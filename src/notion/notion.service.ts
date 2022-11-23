@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { Client } from '@notionhq/client';
-import { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
+import {
+  PageObjectResponse,
+  CreatePageParameters,
+} from '@notionhq/client/build/src/api-endpoints';
 import { Task } from './task.model';
-import { CreatePageParameters } from '@notionhq/client/build/src/api-endpoints';
 import { USER } from 'src/slack/slack.consts';
 
 // Doc: https://developers.notion.com/reference/property-value-object

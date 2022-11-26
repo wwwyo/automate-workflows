@@ -1,12 +1,16 @@
 # 開発環境構築
+
 ```bash
 $ cd work dir
 $ npm i
 $ npm run start:dev
 ```
+
 # deploy
+
 ```bash
-$ npm run build
+$ gcloud projects list
+$ gcloud config set project <project id>
 $ npm run deploy
 ```
 

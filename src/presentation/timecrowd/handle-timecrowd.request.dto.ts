@@ -2,7 +2,7 @@ type HandleTimeCrowdRequestDto = {
   id: string;
   started_at: string; // yyyy-MM-dd:Thh:mm:ss
   stopped_at: string; // yyyy-MM-dd:Thh:mm:ss
-  duration: number; // 作業時間
+  duration: number; // 作業時間 秒
   amount: number;
   user: {
     id: string;

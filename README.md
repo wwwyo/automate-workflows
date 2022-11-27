@@ -8,6 +8,8 @@ $ npm run start:dev
 
 # deploy
 
+環境変数は cloud run 上に配置
+
 ```bash
 $ gcloud projects list
 $ gcloud config set project <project id>

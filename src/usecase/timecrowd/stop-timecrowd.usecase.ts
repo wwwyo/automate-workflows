@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import Datetime from 'src/domain/datetime.value-object';
 import Channel from 'src/domain/slack/channel.value-object';
 import Time from 'src/domain/time.value-object';
+import Event from 'src/domain/timecrowd/event.value-object';
 import SlackClient from 'src/infrastructure/module/slack.client';
 import StopTimeCrowdCommand from './stop-timecrowd.command';
 
@@ -10,6 +11,7 @@ export default class StopTimeCrowdUseCase {
   constructor(private readonly messageClient: SlackClient) {}
 
   async handle(command: StopTimeCrowdCommand): Promise<void> {
+    if (new Event(command.event).isStart) return;
     const startedAt = new Datetime(new Date(command.startedAt));
     const stoppedAt = new Datetime(new Date(command.stoppedAt));
     const duration = new Time(command.durationSeconds);
